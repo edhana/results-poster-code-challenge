@@ -6,7 +6,7 @@ class BigFiveResultTextSerializer
 
   def to_hash
     header_hash = {
-      'name' => 'Eduardo Marques',
+      'NAME' => 'Eduardo Marques',
       'EMAIL' => 'eduardo.marques81@gmail.com',
     }
 
@@ -27,14 +27,14 @@ class BigFiveResultTextSerializer
     text.each_line do |l|
       if l.match?(/\.\.\d/) # only doted lines with value
         if l.match?(/^[A-Z]/) # start with letter -- HEADER
-          if sub_hash.include?('facets')
-            sub_hash['facets'] = facets_hash
+          if sub_hash.include?('Facets')
+            sub_hash['Facets'] = facets_hash
             result_hash[header_line[0]] = sub_hash
           end
 
           header_line = l.split(/\.{3,}/)
-          sub_hash['overall_score'] = header_line[1].to_i
-          sub_hash['facets'] = nil
+          sub_hash['Overall Score'] = header_line[1].to_i
+          sub_hash['Facets'] = nil
         end
 
         if l.match?(/^\.\.[A-Z]/)
@@ -45,7 +45,7 @@ class BigFiveResultTextSerializer
     end
 
     # TODO: Refactor repeated code
-    sub_hash['facets'] = facets_hash
+    sub_hash['Facets'] = facets_hash
     result_hash[header_line[0]] = sub_hash
 
     return result_hash
