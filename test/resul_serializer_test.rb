@@ -29,6 +29,11 @@ class BigFiveResultTextSerializer
     text.each_line do |l|
       if l.match?(/\.\.\d/) # only doted lines with value
         if l.match?(/^[A-Z]/) # start with letter -- HEADER
+          if sub_hash.include?('facets')
+            sub_hash['facets'] = facets_hash
+            result_hash[header_line[0]] = sub_hash
+          end
+
           header_line = l.split(/\.{3,}/)
           sub_hash['overall_score'] = header_line[1].to_i
           sub_hash['facets'] = nil
@@ -59,5 +64,17 @@ describe BigFiveResultTextSerializer do
   it "should retrie a non-empty hash from the text" do
     @serializer.wont_be_nil
     @serializer.to_hash.size.must_be :>=, 3
+  end
+
+  it "should have the EXTRAVERSION header" do
+    @serializer.to_hash.include?('EXTRAVERSION').must_equal true
+  end
+
+  it "should have all 5 headers" do
+    @serializer.to_hash.include?('EXTRAVERSION').must_equal true
+    @serializer.to_hash.include?('AGREEABLENESS').must_equal true
+    @serializer.to_hash.include?('CONSCIENTIOUSNESS').must_equal true
+    @serializer.to_hash.include?('NEUROTICISM').must_equal true
+    @serializer.to_hash.include?('OPENNESS TO EXPERIENCE').must_equal true
   end
 end
