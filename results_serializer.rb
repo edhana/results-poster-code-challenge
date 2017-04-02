@@ -1,4 +1,3 @@
-
 class BigFiveResultTextSerializer
   def initialize(test_result_str)
     @test_string = test_result_str
@@ -44,10 +43,11 @@ class BigFiveResultTextSerializer
       end
     end
 
-    # TODO: Refactor repeated code
+    # Insert the last facet |TODO: Refact
     sub_hash['Facets'] = facets_hash
     result_hash[header_line[0]] = sub_hash
 
     return result_hash
   end
+
 end

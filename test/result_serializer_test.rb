@@ -5,7 +5,6 @@ require_relative 'fixtures.rb'
 describe BigFiveResultTextSerializer do
   before do
     @basic_text = get_text
-
     @serializer =  BigFiveResultTextSerializer.new @basic_text
   end
 
